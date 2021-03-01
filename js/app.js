@@ -1,6 +1,6 @@
 'use strict';
 
-let imgArray = [
+let images = [
   'bag.jpg',
   'banana.jpg',
   'bathroom.jpg',
@@ -20,145 +20,125 @@ let imgArray = [
   'unicorn.jpg',
   'usb.gif',
   'water-can.jpg',
-  'wine-glass.jpg',
-];
+  'wine-glass.jpg'];
 
 
+const leftImg = document.getElementById( 'leftImg' );
+const middleImg = document.getElementById( 'middleImg' );
+const rightImg = document.getElementById( 'rightImg' );
+const imgSection = document.getElementById( 'ImgSection' );
+const showImgResults = document.getElementById( 'showImgResults' );
 
-const imgSection = document.getElementById( 'imgSection' );
-const leftImg = document.getElementById( 'left-img' );
-const middleImg = document.getElementById( 'middle-img' );
-const rightImg = document.getElementById( 'right-img' );
+Img.allImg = [];
 
-
-
-let leftImgIndex = 0;
-let middleImgIndex = 0;
-let rightImgIndex = 0;
-const clickCounter = 25;
+let newLeftImg;
+let newMiddleImg;
+let newRightImg;
+let validClicks = 25;
+let clicksCounter = 0;
 
 function Img( name ) {
-  this.name = name;
+  this.img = name;
   this.img = `./assets/${name}`;
-  this.clicks = 0;
   this.shown = 0;
-  Img.all.push( this );
-
-
+  this.clicks = 0;
+  Img.allImg.push( this );
 }
-
-Img.all=[];
-Img.counter = 0;
-
-
-
-
-
-
-
-
-for ( let i = 0 ; i<imgArray.length; i++ ){
-  new Img ( imgArray[i] );
-}
-
 
 function printNewImg() {
 
+  showImgResults.style.display = 'none';
 
-  let leftImgRandomIndex;
-  let middleImgRandomIndex;
-  let rightImgRandomIndex;
+  let leftImgIndex;
+  let middleImgIndex;
+  let rightImgIndex;
 
+  do {
+    leftImgIndex = randomImg ( 0, images.length -1 );
+  }
+  while ( leftImgIndex === rightImgIndex || leftImgIndex === middleImgIndex );
+  leftImg.src = Img.allImg[leftImgIndex].img;
+  leftImg.alt = Img.allImg[leftImgIndex].name;
+  newLeftImg = leftImgIndex;
 
-
+  Img.allImg[leftImgIndex].shown++;
 
 
   do {
-    leftImgRandomIndex = randomImg( 0, Img.all.length - 1 );
+    middleImgIndex = randomImg ( 0, images.length -1 );
   }
-  while ( middleImgRandomIndex === leftImgRandomIndex && leftImgRandomIndex === rightImgRandomIndex );
-  leftImg.src = Img.all[leftImgRandomIndex].img;
-  leftImg.alt = Img.all[leftImgRandomIndex].name;
-  leftImgIndex = leftImgRandomIndex;
+  while ( middleImgIndex === leftImgIndex || middleImgIndex === rightImgIndex );
+  middleImg.src = Img.allImg[middleImgIndex].img;
+  middleImg.alt = Img.allImg[middleImgIndex].name;
+  newMiddleImg = middleImgIndex;
 
-
+  Img.allImg[middleImgIndex].shown++;
 
 
   do {
-    middleImgRandomIndex = randomImg( 0, Img.all.length -1 );
-
+    rightImgIndex = randomImg ( 0, images.length -1 );
   }
-  while ( middleImgRandomIndex === leftImgRandomIndex && rightImgRandomIndex === middleImgRandomIndex );
-  middleImg.src = Img.all[middleImgRandomIndex].img;
-  middleImg.alt = Img.all[middleImgRandomIndex].name;
-  middleImgIndex = middleImgRandomIndex;
+  while ( rightImgIndex === leftImgIndex || rightImgIndex === middleImgIndex );
+  rightImg.src = Img.allImg[rightImgIndex].img;
+  rightImg.alt = Img.allImg[rightImgIndex].name;
+  newRightImg = rightImgIndex;
 
-
-  do {
-    rightImgRandomIndex = randomImg ( 0, Img.all.length -1 );
-  }
-  while ( rightImgRandomIndex === middleImgRandomIndex && leftImgRandomIndex === rightImgRandomIndex );
-  rightImg.src = Img.all[rightImgRandomIndex].img;
-  rightImg.alt = Img.all[rightImgRandomIndex].name;
-  rightImgIndex = rightImgRandomIndex;
-
-
-
-  Img.all[leftImgIndex].shown++;
-  Img.all[middleImgIndex].shown++;
-  Img.all[rightImgIndex].shown++;
+  Img.allImg[rightImgIndex].shown++;
 }
 
-
-
-// function handelClick (event) {
-//   if (Img.all <= clickCounter)
-//   const clickedElement = event.target;
-//   if ( clickedElement.id == '')
-// }
-
-//((Type == 2 && PageCount == 0) || (Type == 2 && PageCount == ''))
-
-function handelClick( event ) {
-  if ( Img.all < clickCounter ) {
-    const clickedElement = event.target;
-    if ( clickedElement.id === 'leftImg' ||
-    clickedElement.id === 'rightImg' ||
-    clickedElement.id === 'middleImg' ) {
-      if ( clickedElement.id === 'leftImg' ) {
-        Img.all[leftImgIndex].clicks++;
-      }
-      if ( clickedElement.id === 'middleImg' ) {
-        Img.all[middleImgIndex].clicks++;
-      }
-      if ( clickedElement.id === 'rightImg' ) {
-        Img.all[rightImgIndex].clicks++;
-      }
-
-      Img.counter++;
-      printNewImg();
-      console.log( Img.all );
-    }
-
-  }
-
+function randomImg( min, max ) {
+  let newIndex = Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+  return newIndex;
 }
-
-// }
-
-
 
 imgSection.addEventListener( 'click', handelClick );
+function handelClick ( event ) {
+  if ( clicksCounter < validClicks - 1 ) {
+    const clickingElement = event.target;
+    clicksCounter++;
 
-console.log ( Img.all );
+    if ( clickingElement.id === 'leftImg' ){
+      Img.allImg[newLeftImg].clicks += 1;
+    }
 
-function randomImg ( min,max ) {
-  return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+    if ( clickingElement.id === 'middleImg' ){
+      Img.allImg[newMiddleImg].clicks += 1;
+    }
 
+    if ( clickingElement.id === 'rightImg' ){
+      Img.allImg[newRightImg].clicks += 1;
+    }
+    printNewImg();
+  }
+
+  else {
+    imgSection.removeEventListener( 'click', handelClick );
+    showImgResults.style.display = 'block';
+  }
+
+}
+
+
+showImgResults.addEventListener( 'click', handelButtonClick );
+
+function handelButtonClick() {
+  const resultSection = document.getElementById( 'resultSection' );
+
+  const ulElement = document.createElement( 'ul' );
+  resultSection.appendChild( ulElement );
+  for ( let i = 0; i < Img.allImg.length; i++ ) {
+    const liElement = document.createElement( 'li' );
+    ulElement.appendChild( liElement );
+    liElement.textContent = `${Img.allImg[i].name.slice( 0, -4 )} had ${Img.allImg[i].clicks} votes, and was seen ${Img.allImg[i].shown} times.`;
+  }
+
+  showImgResults.removeEventListener( 'click', handelButtonClick );
+
+}
+
+
+for ( let i = 0; i < images.length; i++ ) {
+  new Img ( images[i] );
 }
 
 printNewImg();
-
-
-
-

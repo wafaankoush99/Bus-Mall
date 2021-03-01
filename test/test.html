@@ -1,16 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Class 11 Demo</title>
+  <title>Bus Mall</title>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
   <section class="container">
     <header>
       <img src="https://placehold.it/100x100/ddd" alt="" class="logo">
@@ -20,19 +18,23 @@
         <a href="">Contact</a>
       </nav>
     </header>
-
-    <main>
-      <section class="image-section" id="imageSection">
+    <main class="mainContainer">
+      <section id="imageSection">
         <img src="" alt="" id="leftImage">
+        <img src="" alt="" id="middleImage">
         <img src="" alt="" id="rightImage">
       </section>
+      <canvas id="myChart" width="400" height="400" style="color: 'black';"></canvas>
+      <section id="resultSection">
+        <button id="resultButton">View Results</button>
+        <ul> </ul>
+      </section>
     </main>
-    
     <footer>
-      <p>all right reserve 2020&copy;</p>
+      <p>All Right Reserve 2020&copy;</p>
     </footer>
-  </sectcion>
-
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
