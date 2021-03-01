@@ -38,7 +38,7 @@ let validClicks = 25;
 let clicksCounter = 0;
 
 function Img( name ) {
-  this.img = name;
+  this.name = name;
   this.img = `./assets/${name}`;
   this.shown = 0;
   this.clicks = 0;

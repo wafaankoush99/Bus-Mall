@@ -1,0 +1,14 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 960px;
+  margin: auto;
+}
+
+img {
+  width: 20%;
+  display: inline;
+}
