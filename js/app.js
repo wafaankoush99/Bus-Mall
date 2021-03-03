@@ -45,6 +45,9 @@ function Img( name ) {
   Img.allImg.push( this );
 }
 
+
+let previous = [];
+
 function printNewImg() {
 
   showImgResults.style.display = 'none';
@@ -60,6 +63,7 @@ function printNewImg() {
   leftImg.src = Img.allImg[leftImgIndex].img;
   leftImg.alt = Img.allImg[leftImgIndex].name;
   newLeftImg = leftImgIndex;
+  previous.push( leftImgIndex );
 
   Img.allImg[leftImgIndex].shown++;
 
@@ -71,6 +75,8 @@ function printNewImg() {
   middleImg.src = Img.allImg[middleImgIndex].img;
   middleImg.alt = Img.allImg[middleImgIndex].name;
   newMiddleImg = middleImgIndex;
+  previous.push( leftImgIndex );
+
 
   Img.allImg[middleImgIndex].shown++;
 
@@ -82,14 +88,26 @@ function printNewImg() {
   rightImg.src = Img.allImg[rightImgIndex].img;
   rightImg.alt = Img.allImg[rightImgIndex].name;
   newRightImg = rightImgIndex;
+  previous.push( rightImgIndex );
+
 
   Img.allImg[rightImgIndex].shown++;
 }
 
+
 function randomImg( min, max ) {
-  let newIndex = Math.floor( Math.random() * ( max - min + 1 ) ) + min;
-  return newIndex;
+
+  let newGroup = Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+  for( let i = 0;i < previous.length;i++ ){
+    if ( newGroup === previous[i] ){
+      newGroup = Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+    }
+  }return( newGroup );
+
 }
+
+
+
 
 imgSection.addEventListener( 'click', handelClick );
 function handelClick ( event ) {
@@ -114,6 +132,8 @@ function handelClick ( event ) {
   else {
     imgSection.removeEventListener( 'click', handelClick );
     showImgResults.style.display = 'block';
+    printChart();
+
   }
 
 }
@@ -142,3 +162,63 @@ for ( let i = 0; i < images.length; i++ ) {
 }
 
 printNewImg();
+
+
+
+function printChart() {
+
+  let imagesLabels = [];
+  let clicksData = [];
+  let shownData = [];
+
+  for ( let i = 0 ; i < Img.allImg.length; i++ ) {
+    imagesLabels.push( Img.allImg[i].name.slice( 0, -4 ) );
+    clicksData.push( Img.allImg[i].clicks );
+    shownData.push( Img.allImg[i].shown );
+  }
+
+  let ctx = document.getElementById( 'myChart' ).getContext( '2d' );
+  let myChart = new Chart( ctx, {
+    type: 'bar',
+    data: {
+      labels: imagesLabels,
+      datasets: [{
+        label: '# of Votes',
+        data: clicksData,
+        backgroundColor:
+
+          'rgba(255, 206, 86, 0.2)',
+
+        borderColor:
+
+          'rgba(255, 206, 86, 1)',
+
+        borderWidth: 3
+      }
+      ,{
+
+        label: '# of Votes',
+        data: shownData,
+        backgroundColor:
+
+          'rgba(75, 192, 192, 0.2)',
+
+        borderColor:
+          'rgba(75, 192, 192, 0.2)',
+
+        borderWidth: 3
+      }],
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  }
+  );
+}
+
