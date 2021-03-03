@@ -45,6 +45,8 @@ function Img( name ) {
   Img.allImg.push( this );
 }
 
+localStorage.setItem( 'images', JSON.stringify( images.all ) );
+
 
 let previous = [];
 
@@ -105,6 +107,7 @@ function randomImg( min, max ) {
   }return( newGroup );
 
 }
+
 
 
 
@@ -222,3 +225,14 @@ function printChart() {
   );
 }
 
+function saveData() {
+  const data = localStorage.getItem( 'images' );
+
+  if( data ) {
+    const objectData = JSON.parse( data );
+    images.all = objectData;
+    printNewImg();
+  }
+}
+
+saveData();
