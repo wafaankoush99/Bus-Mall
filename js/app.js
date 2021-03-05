@@ -226,13 +226,11 @@ function printChart() {
 }
 
 function saveData() {
-  const data = localStorage.getItem( 'images' );
 
-  if( data ) {
-    const objectData = JSON.parse( data );
-    images.all = objectData;
-    printNewImg();
-  }
+  const data = localStorage.setItem( 'name' );
+
+  JSON.parse( Img.localStorage.getItem( 'name' ) );
+
 }
 
 saveData();
