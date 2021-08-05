@@ -1,26 +1,26 @@
 'use strict';
 
 let images = [
-  './Bag.jpg',
-  './Banana.jpg',
-  './Bathroom.jpg',
-  './Boots.jpg',
-  './Breakfast.jpg',
-  './Bubblegum.jpg',
-  './Chair.jpg',
-  './Cthulhu.jpg',
-  './Dog-duck.jpg',
-  './Dragon.jpg',
-  './Pen.jpg',
-  './Pet-sweep.jpg',
-  './Scissors.jpg',
-  './Shark.jpg',
-  './Sweep.png',
-  './Tauntaun.jpg',
-  './Unicorn.jpg',
-  './Usb.gif',
-  './Water-can.jpg',
-  './Wine-glass.jpg'];
+  'Bag.jpg',
+  'Banana.jpg',
+  'Bathroom.jpg',
+  'Boots.jpg',
+  'Breakfast.jpg',
+  'Bubblegum.jpg',
+  'Chair.jpg',
+  'Cthulhu.jpg',
+  'Dog-duck.jpg',
+  'Dragon.jpg',
+  'Pen.jpg',
+  'Pet-sweep.jpg',
+  'Scissors.jpg',
+  'Shark.jpg',
+  'Sweep.png',
+  'Tauntaun.jpg',
+  'Unicorn.jpg',
+  'Usb.gif',
+  'Water-can.jpg',
+  'Wine-glass.jpg'];
 
 
 const leftImg = document.getElementById( 'leftImg' );
@@ -39,7 +39,7 @@ let clicksCounter = 0;
 
 function Img( name ) {
   this.name = name;
-  this.img = `./assets/${name}`;
+  this.img = `../assets/${name}`;
   this.shown = 0;
   this.clicks = 0;
   Img.allImg.push( this );
