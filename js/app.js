@@ -39,7 +39,7 @@ let clicksCounter = 0;
 
 function Img( name ) {
   this.name = name;
-  this.img = `../assets/${name}`;
+  this.img = `./img/${name}`;
   this.shown = 0;
   this.clicks = 0;
   Img.allImg.push( this );
